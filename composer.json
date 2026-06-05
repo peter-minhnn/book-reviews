@@ -1,0 +1,16 @@
+{
+    "name": "book-review/book-review-php",
+    "description": "Book Review - Pure PHP MVC",
+    "type": "project",
+    "require": {
+        "php": "^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}

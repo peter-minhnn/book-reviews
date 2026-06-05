@@ -1,0 +1,72 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: book_review_php_app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - book_review_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: book_review_php_nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - book_review_network
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: book_review_php_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: book_review_db
+      POSTGRES_USER: book_review_user
+      POSTGRES_PASSWORD: book_review_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U book_review_user -d book_review_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - book_review_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: book_review_php_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - book_review_network
+
+networks:
+  book_review_network:
+    driver: bridge
+
+volumes:
+  postgres_data:

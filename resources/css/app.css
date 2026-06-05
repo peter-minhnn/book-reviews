@@ -1,0 +1,306 @@
+@import "tailwindcss";
+
+@plugin "@tailwindcss/forms";
+
+@theme {
+    --font-sans: 'Be Vietnam Pro', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-display: 'Playfair Display', 'Be Vietnam Pro', ui-serif, Georgia, serif;
+}
+
+/* ── Brand CSS Variables ── */
+:root {
+    --coral: #FF6B6B;
+    --coral-dark: #e55a5a;
+    --brown: #4A3728;
+    --brown-light: #8B7355;
+    --peach: #FFD4B8;
+    --yellow: #FFE66D;
+    --mint: #98EECC;
+    --mint-deep: #2E8B7A;
+}
+
+/* ── Clay / Neumorphic Cards ── */
+.clay {
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 24px;
+    box-shadow: 6px 6px 20px rgba(180, 160, 140, 0.12),
+                -4px -4px 14px rgba(255, 255, 255, 0.9),
+                inset 1px 1px 2px rgba(255, 255, 255, 0.7);
+    border: 1.5px solid rgba(255, 255, 255, 0.8);
+}
+
+.clay-sm {
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 16px;
+    box-shadow: 3px 3px 10px rgba(180, 160, 140, 0.08),
+                -2px -2px 8px rgba(255, 255, 255, 0.85),
+                inset 0.5px 0.5px 1px rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.clay-peach {
+    background: linear-gradient(145deg, #fff5f0, #ffe8d8);
+    border: 1.5px solid rgba(255, 212, 184, 0.3);
+    box-shadow: 4px 4px 12px rgba(180, 160, 140, 0.08),
+                -2px -2px 8px rgba(255, 255, 255, 0.9);
+}
+
+.clay-yellow {
+    background: linear-gradient(145deg, #fffaeb, #fff3cd);
+    border: 1.5px solid rgba(255, 230, 109, 0.3);
+    box-shadow: 4px 4px 12px rgba(180, 160, 140, 0.08),
+                -2px -2px 8px rgba(255, 255, 255, 0.9);
+}
+
+/* ── Book Hero Background ── */
+.book-bg {
+    background: linear-gradient(135deg, #4A3728 0%, #6B5344 40%, #8B7355 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.book-bg::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 80%;
+    height: 200%;
+    background: radial-gradient(ellipse, rgba(255, 107, 107, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.book-bg::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 60%;
+    height: 150%;
+    background: radial-gradient(ellipse, rgba(255, 212, 184, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* ── Scroll Reveal Animations ── */
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: revealIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-1 { animation-delay: 0.05s; }
+.reveal-2 { animation-delay: 0.15s; }
+.reveal-3 { animation-delay: 0.25s; }
+.reveal-4 { animation-delay: 0.35s; }
+.reveal-5 { animation-delay: 0.45s; }
+.reveal-6 { animation-delay: 0.55s; }
+
+@keyframes revealIn {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Float Animation ── */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* ── CTA Pulse ── */
+@keyframes pulseCta {
+    0%, 100% { box-shadow: 0 4px 14px rgba(255, 107, 107, 0.35); }
+    50% { box-shadow: 0 6px 24px rgba(255, 107, 107, 0.55); }
+}
+
+.pulse-cta {
+    animation: pulseCta 2.5s ease-in-out infinite;
+}
+
+/* ── Font Display Utility ── */
+.font-display {
+    font-family: 'Playfair Display', 'Be Vietnam Pro', ui-serif, Georgia, serif;
+}
+
+/* ── Glass Morphism ── */
+.glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* ── Star Rating ── */
+.stars-row {
+    display: inline-flex;
+    gap: 2px;
+}
+
+/* Wrapper so tooltip is outside the button (avoids button clipping) */
+.star-wrap {
+    position: relative;
+    display: inline-flex;
+}
+
+/* Base star button */
+.star-btn {
+    position: relative;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px;
+    line-height: 1;
+    outline: none;
+    color: #d4c8b8;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+                color 0.15s ease,
+                text-shadow 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Alpine sets these based on rating + hover */
+.star-active {
+    color: var(--yellow);
+    transform: scale(1.12);
+    text-shadow: 0 0 8px rgba(255, 230, 109, 0.45);
+}
+
+.star-inactive {
+    color: #d4c8b8;
+}
+
+/* Extra pop on wrapper hover */
+.star-wrap:hover .star-btn {
+    z-index: 10;
+    transform: scale(1.35);
+    text-shadow: 0 0 16px rgba(255, 230, 109, 0.7);
+}
+
+/* Click feedback */
+.star-btn:active {
+    transform: scale(0.85) !important;
+}
+
+/* Tooltip — positioned relative to wrapper, sibling of button */
+.star-tooltip {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%) translateY(3px);
+    background: var(--brown);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    font-family: var(--font-sans);
+    opacity: 0;
+    z-index: 20;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.star-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--brown);
+}
+
+.star-wrap:hover .star-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ── Deprecated: kept so existing display-only stars still work ── */
+.star-rating {
+    display: inline-flex;
+    gap: 2px;
+}
+
+.star-rating .star {
+    color: var(--yellow);
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.star-rating .star:hover {
+    transform: scale(1.2);
+}
+
+.star-rating .star.empty {
+    color: #ddd;
+}
+
+/* ── Toast Animations ── */
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutRight {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
+
+.toast-enter { animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.toast-exit { animation: slideOutRight 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+
+@keyframes toastTimer {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+.toast-progress { animation: toastTimer 4s linear forwards; }
+
+/* ── Prose overrides for book content ── */
+.prose {
+    line-height: 1.8;
+}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(74, 55, 40, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(74, 55, 40, 0.2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(74, 55, 40, 0.35);
+}
+
+/* ── Alpine x-cloak ── */
+[x-cloak] { display: none !important; }
+
+/* ── Smooth page transitions ── */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ── Selection color ── */
+::selection {
+    background: rgba(255, 107, 107, 0.2);
+    color: var(--brown);
+}

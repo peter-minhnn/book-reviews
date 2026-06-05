@@ -1,0 +1,10 @@
+[2026-05-26 17:52:24] PDOException: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "reviews_user_id_book_id_key"
+DETAIL:  Key (user_id, book_id)=(2, 21) already exists. in /var/www/html/src/Core/Database.php:33
+#0 /var/www/html/src/Core/Database.php(33): PDOStatement->execute(Array)
+#1 /var/www/html/src/Core/Database.php(53): App\Core\Database->query('INSERT INTO rev...', Array)
+#2 /var/www/html/src/Repositories/ReviewRepository.php(60): App\Core\Database->insert('reviews', Array)
+#3 /var/www/html/src/Controllers/ReviewController.php(36): App\Repositories\ReviewRepository->create(Array)
+#4 /var/www/html/src/Core/Router.php(146): App\Controllers\ReviewController->store(21)
+#5 /var/www/html/src/Core/App.php(43): App\Core\Router->dispatch()
+#6 /var/www/html/public/index.php(14): App\Core\App->run()
+#7 {main}
